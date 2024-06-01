@@ -59,9 +59,10 @@ jobs:
       - 
         name: Docker Scout scan
         id: scout
+        if: startsWith(github.ref, 'refs/tags/v')
         uses: docker/scout-action@v1
         with:
-          image: ${{ vars.DOCKERHUB_USERNAME }}/example:latest
+          image: ${{ vars.DOCKERHUB_USERNAME }}/example:${{ github.ref.replace('refs/tags/v', '') }}
 
       - 
         name: Fail if there are critical or high vulnerabilities
