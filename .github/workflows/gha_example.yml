@@ -61,8 +61,7 @@ jobs:
         id: scout
         uses: docker/scout-action@v1
         with:
-          command: cves
-          image: ${{ steps.meta.outputs.tags }}
+          image: ${{ steps.meta.outputs.tags[0] }}
 
       - 
         name: Fail if there are critical or high vulnerabilities
