@@ -57,11 +57,19 @@ jobs:
           tags: ${{ steps.meta.outputs.tags }}
 
       - 
+        name: Get first tag from meta outputs
+        id: get_first_tag
+        run: |
+          tags="${{ steps.meta.outputs.tags }}"
+          IFS=',' read -ra tag_array <<< "$tags"
+          echo "::set-output name=first_tag::${tag_array[0]}"
+
+      - 
         name: Docker Scout scan
         id: scout
         uses: docker/scout-action@v1
         with:
-          image: ${{ steps.meta.outputs.tags }}
+          image: ${{ vars.DOCKERHUB_USERNAME }}/example:${{ steps.get_first_tag.outputs.first_tag }}
 
       - 
         name: Fail if there are critical or high vulnerabilities
