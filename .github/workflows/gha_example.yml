@@ -63,6 +63,7 @@ jobs:
         with:
           command: cves
           platform: linux/amd64
+          ignore-base: false
           image: ${{ steps.meta.outputs.tags[0] }}
 
       - 
