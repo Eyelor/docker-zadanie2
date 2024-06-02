@@ -1,6 +1,8 @@
 # Stage 1: Application Building
 
-FROM node:20.13.1-alpine as build
+# Production version: node:20.13.1-alpine
+# Test version: node:20.9.0-alpine
+FROM node:20.9.0-alpine as build
 
 WORKDIR /server-app
 
@@ -14,7 +16,9 @@ RUN npm install geoip-lite
 
 # Stage 2: Application Run
 
-FROM node:20.13.1-alpine as production
+# Production version: node:20.13.1-alpine
+# Test version: node:20.9.0-alpine
+FROM node:20.9.0-alpine as production
 
 LABEL org.opencontainers.image.authors="Jakub Kopeć"
 
