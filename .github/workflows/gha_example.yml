@@ -24,7 +24,6 @@ jobs:
           images: ${{ vars.DOCKERHUB_USERNAME }}/example
           flavor: latest=false
           tags: |
-            type=sha,priority=100,prefix=sha-,format=short
             type=semver,priority=200,pattern={{version}}   
 
       - 
@@ -62,7 +61,7 @@ jobs:
         uses: docker/scout-action@v1
         with:
           command: cves
-          image: ${{ steps.meta.outputs.tags[0] }}
+          image: ${{ steps.meta.outputs.tags }}
           platform: linux/amd64
 
       - 
@@ -70,8 +69,6 @@ jobs:
         if: ${{ success() && steps.scout.outcome == 'success' }}
         run: |
           echo "TAGS: ${{ steps.meta.outputs.tags }}"
-          echo "TAGS[0]: ${{ steps.meta.outputs.tags[0] }}"
-          echo "TAGS[1]: ${{ steps.meta.outputs.tags[1] }}"
           echo "SCOUT_RESULTS: $SCOUT_RESULTS"
           critical_vulns=$(echo "$SCOUT_RESULTS" | jq '.vulnerabilities | map(select(.severity == "CRITICAL")) | length')
           high_vulns=$(echo "$SCOUT_RESULTS" | jq '.vulnerabilities | map(select(.severity == "HIGH")) | length')
