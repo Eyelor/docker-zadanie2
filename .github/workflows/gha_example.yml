@@ -62,14 +62,17 @@ jobs:
         uses: docker/scout-action@v1
         with:
           command: cves
-          platform: linux/amd64
-          ignore-base: true
           image: ${{ steps.meta.outputs.tags[0] }}
+          platform: linux/amd64
 
       - 
         name: Fail if there are critical or high vulnerabilities
         if: ${{ success() && steps.scout.outcome == 'success' }}
         run: |
+          echo "TAGS: ${{ steps.meta.outputs.tags }}"
+          echo "TAGS[0]: ${{ steps.meta.outputs.tags[0] }}"
+          echo "TAGS[1]: ${{ steps.meta.outputs.tags[1] }}"
+          echo "SCOUT_RESULTS: $SCOUT_RESULTS"
           critical_vulns=$(echo "$SCOUT_RESULTS" | jq '.vulnerabilities | map(select(.severity == "CRITICAL")) | length')
           high_vulns=$(echo "$SCOUT_RESULTS" | jq '.vulnerabilities | map(select(.severity == "HIGH")) | length')
           if [ "$critical_vulns" -gt 0 ] || [ "$high_vulns" -gt 0 ]; then
