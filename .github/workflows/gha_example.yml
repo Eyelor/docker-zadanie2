@@ -97,4 +97,4 @@ jobs:
           file: ./Dockerfile
           platforms: linux/amd64,linux/arm64
           push: true
-          tags: ghcr.io/${{ github.repository_owner }}/docker-zadanie2:${{ env.DOCKER_METADATA_OUTPUT_VERSION }}
+          tags: ghcr.io/${{ vars.MY_GITHUB_LOWERCASE_USERNAME }}/docker-zadanie2:${{ env.DOCKER_METADATA_OUTPUT_VERSION }}
