@@ -2,7 +2,7 @@
 
 # Production version: node:20.13.1-alpine
 # Test version: node:16.20.0-alpine
-FROM node:16.20.0-alpine as build
+FROM node:20.13.1-alpine as build
 
 WORKDIR /server-app
 
@@ -18,7 +18,7 @@ RUN npm install geoip-lite
 
 # Production version: node:20.13.1-alpine
 # Test version: node:16.20.0-alpine
-FROM node:16.20.0-alpine as production
+FROM node:20.13.1-alpine as production
 
 LABEL org.opencontainers.image.authors="Jakub Kopeć"
 
